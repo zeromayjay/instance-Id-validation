@@ -39,6 +39,9 @@ public class ServiceController {
 
     @Value("${git.commit.id}")
     private String commitId;
+    
+    @Value("${git.build.number}")
+    private String buildNumberUnique;
 	
 
 	@GetMapping("/getInformation")
@@ -72,6 +75,7 @@ public class ServiceController {
         result.put("Commit message",commitMessage);
         result.put("Commit branch", branch);
         result.put("Commit id", commitId);
+        result.put("Build Number Unique", buildNumberUnique);
         return result;
     }
 	
