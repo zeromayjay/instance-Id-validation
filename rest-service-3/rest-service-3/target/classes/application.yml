@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: spring-cloud-eureka-client
+server:
+  port: 8082
+app:
+  version: '0.0.1-SNAPSHOT'
