@@ -40,7 +40,12 @@ public class ServiceController {
     @Value("${git.commit.id}")
     private String commitId;
     
-    @Value("${git.build.number}")
+    @Value("${git.commit.id.abbrev}")
+    private String commitIdShort;
+    
+    
+    //is not working with GitHub
+    @Value("${git.build.number.unique}")
     private String buildNumberUnique;
 	
 
@@ -75,7 +80,7 @@ public class ServiceController {
         result.put("Commit message",commitMessage);
         result.put("Commit branch", branch);
         result.put("Commit id", commitId);
-        result.put("Build Number Unique", buildNumberUnique);
+        result.put("Commit id abbrevation", commitIdShort);
         return result;
     }
 	
