@@ -2,6 +2,7 @@ package com.example.restservice3;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -22,32 +23,42 @@ public class ServiceController {
 	
 	String InstanceID = "X-service-3-deployment-id-8082";
 	
-	@Value("${application.name}")
+	@Value("${spring.application.name}")
     private String applicationName;
+    
+    @Value("${properties.myown.version.new}")
+    private String myownNew;
+    
+    @Value("${properties.myown.version.old}")
+    private String myownOld;
+    
+    private String myown;
+    
 
-    @Value("${build.version}")
-    private String buildVersion;
-
-    @Value("${build.timestamp}")
-    private String buildTimestamp;
-
+    /**
+     * git-commit-id-plugin-properties
+     */
     @Value("${git.commit.message.short}")
     private String commitMessage;
 
     @Value("${git.branch}")
     private String branch;
-
+    
     @Value("${git.commit.id}")
     private String commitId;
     
     @Value("${git.commit.id.abbrev}")
     private String commitIdShort;
     
+    @Value("${git.build.version}")
+    private String buildV;
     
-    //is not working with GitHub
+    @Value("${git.commit.time}")
+    private String commitTime;
+    
+    //this property is not working with GitHub
     @Value("${git.build.number.unique}")
     private String buildNumberUnique;
-	
 
 	@GetMapping("/getInformation")
 	public Mono<String> consume(HttpServletResponse var) {
@@ -65,9 +76,7 @@ public class ServiceController {
 		})
 				.flatMap(clientResponse -> clientResponse.bodyToMono(String.class));
 		
-		System.out.println("the List: " + var.getHeaders("Instance-ID"));
-		System.out.println("VERSION: " + buildTimestamp);
-		
+		System.out.println("the List: " + var.getHeaders("Instance-ID"));		
 		
 		return response;
 		//return null;
@@ -76,13 +85,35 @@ public class ServiceController {
 	
     @RequestMapping("/commitId")
     public Map<String, String> getCommitId() {
+    	
+    	getVerId();
+    	
+    	String idConcat = applicationName + "-" + myownNew + "-" + commitIdShort + "-" + commitTime ;
+    	
         Map<String, String> result = new HashMap<>();
         result.put("Commit message",commitMessage);
         result.put("Commit branch", branch);
         result.put("Commit id", commitId);
         result.put("Commit id abbrevation", commitIdShort);
+        result.put("Commit build version", buildV);
+        result.put("myown prop", myown);
+        result.put("application name", applicationName);
+        result.put("id concatenated", idConcat);
         return result;
     }
+
+
+	private void getVerId() {
+		Random rand = new Random();
+		boolean val = rand.nextInt(3)==0;
+		
+		if (val != true) {
+			myown = myownNew;
+		}
+		else {
+			myown = myownOld;
+		}
+	}
 	
 	
 	

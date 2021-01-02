@@ -1,6 +1,16 @@
 spring:
   application:
-    name: spring-cloud-eureka-client
+    name: rest-service-3
 server:
   port: 8082
+app:
+  version: '@project.version@'
+build:
+   timestamp: '@build.time@'
+properties:
+   myown:
+      version:
+         old: 'version-1.0.0'
+         new: 'version-1.0.1'
+  
   
