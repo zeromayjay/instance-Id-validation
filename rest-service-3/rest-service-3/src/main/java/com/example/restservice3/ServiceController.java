@@ -86,7 +86,7 @@ public class ServiceController {
     @RequestMapping("/commitId")
     public Map<String, String> getCommitId() {
     	
-    	getVerId();
+    	getVerIdRandom();
     	
     	String idConcat = applicationName + "-" + myownNew + "-" + commitIdShort + "-" + commitTime ;
     	
@@ -103,7 +103,7 @@ public class ServiceController {
     }
 
 
-	private void getVerId() {
+	private void getVerIdRandom() {
 		Random rand = new Random();
 		boolean val = rand.nextInt(3)==0;
 		
