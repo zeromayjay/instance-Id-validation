@@ -88,7 +88,7 @@ public class ServiceController {
     	
     	getVerIdRandom();
     	
-    	String idConcat = applicationName + "-" + myownNew + "-" + commitIdShort + "-" + commitTime ;
+    	String idConcat = applicationName + "-" + myown + "-" + commitIdShort + "-" + commitTime ;
     	
         Map<String, String> result = new HashMap<>();
         result.put("Commit message",commitMessage);
@@ -105,7 +105,8 @@ public class ServiceController {
 
 	private void getVerIdRandom() {
 		Random rand = new Random();
-		boolean val = rand.nextInt(3)==0;
+		// 1/3 val = false
+		boolean val = rand.nextInt(5)==0;
 		
 		if (val != true) {
 			myown = myownNew;
